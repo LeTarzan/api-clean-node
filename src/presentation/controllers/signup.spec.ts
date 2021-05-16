@@ -1,7 +1,5 @@
 import { SignUpController } from './signup'
-import { MissingParamError } from '../errors/missing-param-error'
-import { InvalidParamError } from '../errors/invalid-param-error'
-import { ServerError } from '../errors/server-error'
+import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 
 import { EmailValidator } from '../protocols/email-validator'
 
@@ -130,7 +128,7 @@ describe('SignUP Controller', () => {
         throw new Error()
       }
     }
-  
+
     const emailValidatorStub = new EmailValidatorStub()
     const sut = new SignUpController(emailValidatorStub)
 
@@ -141,7 +139,7 @@ describe('SignUP Controller', () => {
         password: 'any_password',
         passwordConfirmation: 'any_password'
       }
-    } 
+    }
 
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
