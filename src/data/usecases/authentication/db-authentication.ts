@@ -1,4 +1,4 @@
-import { TokenGenerator } from './../../protocols/criptography/token-generator';
+import { Encrypter } from '../../protocols/criptography/encrypter';
 import { HashComparer } from './../../protocols/criptography/hash-comparer';
 import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository';
 import { AuthenticationModel, Authentication } from '../../../domain/useCases/authentication'
@@ -6,16 +6,16 @@ import { AuthenticationModel, Authentication } from '../../../domain/useCases/au
 export class DbAuthentication implements Authentication {
   private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository;
   private readonly hashComparer: HashComparer;
-  private readonly tokenGenerator: TokenGenerator;
+  private readonly encrypter: Encrypter;
 
   constructor(
     loadAccountByEmailRepository: LoadAccountByEmailRepository,
     hashComparer: HashComparer,
-    tokenGenerator: TokenGenerator
+    encrypter: Encrypter
   ) {
     this.loadAccountByEmailRepository = loadAccountByEmailRepository
     this.hashComparer = hashComparer
-    this.tokenGenerator = tokenGenerator
+    this.encrypter = encrypter
   }
 
   async auth(authentication: AuthenticationModel): Promise<string> {
@@ -24,7 +24,7 @@ export class DbAuthentication implements Authentication {
     if (account) {
       const isValid = await this.hashComparer.compare(authentication.password, account.password)
       if (isValid) {
-        const accessToken = await this.tokenGenerator.generate(account.id)
+        const accessToken = await this.encrypter.encrypt(account.id)
         return accessToken
       }
 
