@@ -3,4 +3,4 @@ dist
 coverage
 jest-integration-config.js
 jest-unit-config.js
-data
+./data
