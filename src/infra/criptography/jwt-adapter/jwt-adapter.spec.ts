@@ -6,7 +6,7 @@ jest.mock('jsonwebtoken', () => ({
     return new Promise(resolve => resolve('any_token'))
   },
   async verify(): Promise<string> {
-    return new Promise(resolve => resolve('any_token'))
+    return new Promise(resolve => resolve('any_value'))
   }
 }))
 
