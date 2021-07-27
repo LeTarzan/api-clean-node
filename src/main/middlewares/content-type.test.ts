@@ -6,7 +6,6 @@ describe('Content Type Middleware', () => {
     app.get('/test_content_type', (req, res) => {
       res.send('')
     })
-
     await request(app)
       .get('/test_content_type')
       .expect('content-type', /json/)
@@ -17,7 +16,6 @@ describe('Content Type Middleware', () => {
       res.type('xml')
       res.send('')
     })
-
     await request(app)
       .get('/test_content_type_xml')
       .expect('content-type', /xml/)
