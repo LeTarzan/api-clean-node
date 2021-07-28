@@ -9,7 +9,6 @@
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "up": "npm run build && docker-compose up -d",
     "down": "docker-compose down",
-    "clear_jest": "jest --clearCache",
     "test": "jest --passWithNoTests --silent --noStackTrace --RunInBand",
     "test:ci": "npm test -- --coverage",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
