@@ -1,6 +1,6 @@
-import { noContent, ok, serverError } from './../../../helpers/http/http-helper'
 import { HttpRequest, HttpResponse, LoadSurveys } from './load-surveys-controller-protocols'
-import { Controller } from './../../../protocols/controller'
+import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { Controller } from '@/presentation/protocols/controller'
 
 export class LoadSurveysController implements Controller {
   constructor (
