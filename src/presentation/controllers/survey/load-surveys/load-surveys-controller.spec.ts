@@ -29,7 +29,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
 const makeLoadSurveysStub = (): LoadSurveys => {
   class LoadSurveysStub implements LoadSurveys {
     async load (): Promise<SurveyModel[]> {
-      return new Promise(resolve => resolve(makeFakeSurveys()))
+      return await new Promise(resolve => resolve(makeFakeSurveys()))
     }
   }
 
