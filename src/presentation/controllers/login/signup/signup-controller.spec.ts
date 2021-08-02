@@ -1,13 +1,20 @@
 import { SignUpController } from './signup-controller'
-import { MissingParamError, ServerError, EmailInUseError } from '../../../errors'
-import { AccountModel, AddAccount, AddAccountModel, Validation, Authentication, AuthenticationModel } from './signup-controller-protocols'
-import { HttpRequest } from '../../../protocols'
-import { ok, serverError, badRequest, forbidden } from '../../../helpers/http/http-helper'
+import {
+  AccountModel,
+  AddAccount,
+  AddAccountModel,
+  Validation,
+  Authentication,
+  AuthenticationModel
+} from './signup-controller-protocols'
+import { HttpRequest } from '@/presentation/protocols'
+import { MissingParamError, ServerError, EmailInUseError } from '@/presentation/errors'
+import { ok, serverError, badRequest, forbidden } from '@/presentation/helpers/http/http-helper'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountModel): Promise<AccountModel> {
-      return new Promise(resolve => resolve(makeFakeAccount()))
+      return await new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
   return new AddAccountStub()
@@ -16,7 +23,7 @@ const makeAddAccount = (): AddAccount => {
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     async auth (authentication: AuthenticationModel): Promise<string> {
-      return new Promise(resolve => resolve('any_token'))
+      return await new Promise(resolve => resolve('any_token'))
     }
   }
   return new AuthenticationStub()
@@ -71,7 +78,7 @@ describe('SignUp Controller', () => {
   test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
-      return new Promise((resolve, reject) => reject(new Error()))
+      return await new Promise((resolve, reject) => reject(new Error()))
     })
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
