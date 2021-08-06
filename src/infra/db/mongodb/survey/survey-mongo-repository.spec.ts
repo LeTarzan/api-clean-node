@@ -68,13 +68,33 @@ describe('Survey Mongo Repository', () => {
       expect(surveys[0].question).toBe('any_question')
       expect(surveys[1].question).toBe('other_question')
     })
+
+    test('Should load empty list', async () => {
+      const sut = makeSut()
+
+      const surveys = await sut.loadAll()
+
+      expect(surveys.length).toBe(0)
+    })
   })
 
-  test('Should load empty list', async () => {
-    const sut = makeSut()
+  describe('loadById()', () => {
+    test('Should load a survey by id on success', async () => {
+      const res = await surveyCollection.insertOne(
+        {
+          question: 'any_question',
+          answers: [{
+            image: 'any_image',
+            answer: 'any_answer'
+          }],
+          date: new Date()
+        })
 
-    const surveys = await sut.loadAll()
+      const sut = makeSut()
 
-    expect(surveys.length).toBe(0)
+      const survey = await sut.loadById(res.ops[0]._id)
+
+      expect(survey).toBeTruthy()
+    })
   })
 })
