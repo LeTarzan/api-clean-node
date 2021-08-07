@@ -3,7 +3,7 @@ import {
   LoadAccountByTokenRepository,
   AccountModel,
   Decrypter
-} from '@/data/usecases/load-account-by-token/db-load-account-by-token-protocols'
+} from '@/data/usecases/account/load-account-by-token/db-load-account-by-token-protocols'
 
 const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
