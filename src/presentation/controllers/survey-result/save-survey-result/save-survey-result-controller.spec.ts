@@ -6,7 +6,7 @@ import {
   LoadSurveyById,
   SaveSurveyResult
 } from './save-survey-result-controller-protocols'
-import { mockSurveyResult, throwError } from '@/domain/test/index'
+import { mockSurveyResult, throwError } from '@/domain/test'
 import MockDate from 'mockdate'
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/test'
 
@@ -61,7 +61,7 @@ describe('SaveSurveyResultController', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
 
     jest.spyOn(loadSurveyByIdStub, 'loadById')
-      .mockReturnValueOnce(new Promise(resolve => resolve(null)))
+      .mockReturnValueOnce(Promise.resolve(null))
 
     const httpResponse = await sut.handle(mockRequest())
 
